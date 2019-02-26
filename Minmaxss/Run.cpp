@@ -1,21 +1,22 @@
 
+#include "Minmaxss/Scanner.h"
+
 #include <cstdio>
 #include <cstdlib>
 
-void cpy(const int *src, int *dest, int len)
-{
-	for (int i = 0; i < len; ++i)
-		dest[i] = src[i];
-}
-
 int main()
 {
-	int src = 100;
-	int dest = 0;
+	using namespace Minmaxss;
 
-	cpy(&src, &dest, 1);
+	Scanner_s sScanner{"//+++fdsa+fdsfafa+--***=**="};
 
-	printf("%d\n", dest);
+	for (;;)
+	{
+		auto sToken{sScanner.nextToken()};
+
+		if (sToken.eType == TokenType::EndOfFile)
+			break;
+	}
 
 	return 0;
 }
