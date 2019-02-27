@@ -1,6 +1,8 @@
 
+#define C(CHAR)		static_cast<T>(CHAR)
+
 #define LEVEL1_BEGIN(CHAR)																					\
-case (CHAR): {																								\
+case C(CHAR): {																								\
 	auto nTokenStartLine{this->nLine};																		\
 	auto nTokenStartOffset{this->nOffset};																	\
 	auto nTokenStartIndex{this->nIndex};																	\
@@ -39,7 +41,7 @@ case (CHAR): {																								\
 }
 
 #define LEVELN_BEGIN(CHAR)																					\
-case (CHAR): {																								\
+case C(CHAR): {																								\
 	++this->nOffset;																						\
 	++this->nIndex;																							\
 																											\
@@ -47,7 +49,7 @@ case (CHAR): {																								\
 		switch (this->sString[this->nIndex]) {
 
 #define LEVEL1_ACCEPT_IF(CHAR, TYPE)																		\
-case (CHAR): {																								\
+case C(CHAR): {																								\
 	auto nTokenStartLine{this->nLine};																		\
 	auto nTokenStartOffset{this->nOffset};																	\
 	auto nTokenStartIndex{this->nIndex};																	\
@@ -60,7 +62,7 @@ case (CHAR): {																								\
 }
 
 #define LEVELN_ACCEPT_IF(CHAR, TYPE)																		\
-case (CHAR): {																								\
+case C(CHAR): {																								\
 	++this->nOffset;																						\
 	++this->nIndex;																							\
 																											\
@@ -90,16 +92,16 @@ namespace Minmaxss
 			switch (this->sString[this->nIndex])
 			{
 				LEVEL1_BEGIN('.')
-					case '1':
-					case '2':
-					case '3':
-					case '4':
-					case '5':
-					case '6':
-					case '7':
-					case '8':
-					case '9':
-					case '0':
+					case C('1'):
+					case C('2'):
+					case C('3'):
+					case C('4'):
+					case C('5'):
+					case C('6'):
+					case C('7'):
+					case C('8'):
+					case C('9'):
+					case C('0'):
 						return this->parseNumber();
 				LEVEL_END_ACCEPT(TokenType::Dot)
 
@@ -114,43 +116,42 @@ namespace Minmaxss
 				LEVEL1_ACCEPT_IF(']', TokenType::BraceClose)
 
 				LEVEL1_BEGIN('=')
-					LEVELN_BEGIN('=')
-					LEVEL_END_ACCEPT(TokenType::Equal)
+					LEVELN_ACCEPT_IF('=', TokenType::Equal)
 				LEVEL_END_ACCEPT(TokenType::Assign)
 
 				LEVEL1_BEGIN('+')
-					case '1':
-					case '2':
-					case '3':
-					case '4':
-					case '5':
-					case '6':
-					case '7':
-					case '8':
-					case '9':
-					case '0':
-					case 'e':
-					case 'E':
-					case '.':
+					case C('1'):
+					case C('2'):
+					case C('3'):
+					case C('4'):
+					case C('5'):
+					case C('6'):
+					case C('7'):
+					case C('8'):
+					case C('9'):
+					case C('0'):
+					case C('e'):
+					case C('E'):
+					case C('.'):
 						return this->parseNumber();
 					LEVELN_ACCEPT_IF('=', TokenType::AssignAdd)
 					LEVELN_ACCEPT_IF('+', TokenType::Increment)
 				LEVEL_END_ACCEPT(TokenType::Add)
 
 				LEVEL1_BEGIN('-')
-					case '1':
-					case '2':
-					case '3':
-					case '4':
-					case '5':
-					case '6':
-					case '7':
-					case '8':
-					case '9':
-					case '0':
-					case 'e':
-					case 'E':
-					case '.':
+					case C('1'):
+					case C('2'):
+					case C('3'):
+					case C('4'):
+					case C('5'):
+					case C('6'):
+					case C('7'):
+					case C('8'):
+					case C('9'):
+					case C('0'):
+					case C('e'):
+					case C('E'):
+					case C('.'):
 						return this->parseNumber();
 					LEVELN_ACCEPT_IF('=', TokenType::AssignSubtract)
 					LEVELN_ACCEPT_IF('-', TokenType::Decrement)
@@ -207,23 +208,23 @@ namespace Minmaxss
 					LEVELN_ACCEPT_IF('=', TokenType::NotEqual)
 				LEVEL_END_ACCEPT(TokenType::LogicalNot)
 
-				case '\'':
-				case '"':
+				case C('\''):
+				case C('"'):
 					return this->parseString();
 
-				case '`':
+				case C('`'):
 					return this->parseStringMultiline();
 
-				case '1':
-				case '2':
-				case '3':
-				case '4':
-				case '5':
-				case '6':
-				case '7':
-				case '8':
-				case '9':
-				case '0':
+				case C('1'):
+				case C('2'):
+				case C('3'):
+				case C('4'):
+				case C('5'):
+				case C('6'):
+				case C('7'):
+				case C('8'):
+				case C('9'):
+				case C('0'):
 					return this->parseNumber();
 
 				default:
@@ -235,7 +236,7 @@ namespace Minmaxss
 						if (nErrorStartIndex != this->nIndex)
 							return Token<T>{TokenType::Error, nErrorStartLine, nErrorStartOffset, String{this->sString.cbegin() + nErrorStartIndex, this->sString.cbegin() + this->nIndex}};
 
-						if (this->sString[this->nIndex] == '\n')
+						if (this->sString[this->nIndex] == C('\n'))
 						{
 							++this->nLine;
 							this->nOffset = 0;
@@ -248,43 +249,43 @@ namespace Minmaxss
 					else
 						switch (this->sString[this->nIndex])
 						{
-							case '\\':
-							case '\'':
-							case '"':
-							case '`':
-							case '.':
-							case ',':
-							case ':':
-							case ';':
-							case '(':
-							case ')':
-							case '{':
-							case '}':
-							case '[':
-							case ']':
-							case '=':
-							case '+':
-							case '-':
-							case '*':
-							case '/':
-							case '%':
-							case '~':
-							case '^':
-							case '&':
-							case '|':
-							case '<':
-							case '>':
-							case '!':
-							case '1':
-							case '2':
-							case '3':
-							case '4':
-							case '5':
-							case '6':
-							case '7':
-							case '8':
-							case '9':
-							case '0':
+							case C('\\'):
+							case C('\''):
+							case C('"'):
+							case C('`'):
+							case C('.'):
+							case C(','):
+							case C(':'):
+							case C(';'):
+							case C('('):
+							case C(')'):
+							case C('{'):
+							case C('}'):
+							case C('['):
+							case C(']'):
+							case C('='):
+							case C('+'):
+							case C('-'):
+							case C('*'):
+							case C('/'):
+							case C('%'):
+							case C('~'):
+							case C('^'):
+							case C('&'):
+							case C('|'):
+							case C('<'):
+							case C('>'):
+							case C('!'):
+							case C('1'):
+							case C('2'):
+							case C('3'):
+							case C('4'):
+							case C('5'):
+							case C('6'):
+							case C('7'):
+							case C('8'):
+							case C('9'):
+							case C('0'):
 								break;
 
 							default:
@@ -302,34 +303,34 @@ namespace Minmaxss
 		if (nErrorStartIndex != this->nIndex)
 			return Token<T>{TokenType::Error, nErrorStartLine, nErrorStartOffset, String{this->sString.cbegin() + nErrorStartIndex, this->sString.cend()}};
 
-		return Token<T>{TokenType::EndOfFile, this->nLine, this->nOffset, ""};
+		return Token<T>{TokenType::EndOfFile, this->nLine, this->nOffset, String{}};
 	}
 
 	template<class T> Token<T> Scanner<T>::parseNumber()
 	{
-		return Token<T>{TokenType::LiteralBool, this->nLine, this->nOffset, ""};
+		return Token<T>{TokenType::LiteralBool, this->nLine, this->nOffset, String{}};
 	}
 
 	template<class T> Token<T> Scanner<T>::parseString()
 	{
-		return Token<T>{TokenType::LiteralString, this->nLine, this->nOffset, ""};
+		return Token<T>{TokenType::LiteralString, this->nLine, this->nOffset, String{}};
 	}
 
 	template<class T> Token<T> Scanner<T>::parseStringMultiline()
 	{
-		return Token<T>{TokenType::LiteralString, this->nLine, this->nOffset, ""};
+		return Token<T>{TokenType::LiteralString, this->nLine, this->nOffset, String{}};
 	}
 
 	template<class T> Token<T> Scanner<T>::parseKeyword()
 	{
 		static const std::unordered_map<String, TokenType> sKeywordMap
 		{
-			{"true", TokenType::LiteralBool},
-			{"false", TokenType::LiteralBool},
+			{String{C('t'), C('r'), C('u'), C('e')}, TokenType::LiteralBool},
+			{String{C('f'), C('a'), C('l'), C('s'), C('e')}, TokenType::LiteralBool},
 
-			{"var", TokenType::KeywordVar},
-			{"if", TokenType::KeywordIf},
-			{"for", TokenType::KeywordFor}
+			{String{C('v'), C('a'), C('r')}, TokenType::KeywordVar},
+			{String{C('i'), C('f')}, TokenType::KeywordIf},
+			{String{C('f'), C('o'), C('r')}, TokenType::KeywordFor}
 		};
 
 		Token<T> sToken{TokenType::Identifier, this->nLine, this->nOffset, String{this->sString.cbegin() + this->nIndex, this->sString.cbegin() + this->nIndex + 1}};
@@ -343,33 +344,33 @@ namespace Minmaxss
 
 			switch (this->sString[this->nIndex])
 			{
-				case '\\':
-				case '\'':
-				case '"':
-				case '`':
-				case '.':
-				case ',':
-				case ':':
-				case ';':
-				case '(':
-				case ')':
-				case '{':
-				case '}':
-				case '[':
-				case ']':
-				case '=':
-				case '+':
-				case '-':
-				case '*':
-				case '/':
-				case '%':
-				case '~':
-				case '^':
-				case '&':
-				case '|':
-				case '<':
-				case '>':
-				case '!':
+				case C('\\'):
+				case C('\''):
+				case C('"'):
+				case C('`'):
+				case C('.'):
+				case C(','):
+				case C(':'):
+				case C(';'):
+				case C('('):
+				case C(')'):
+				case C('{'):
+				case C('}'):
+				case C('['):
+				case C(']'):
+				case C('='):
+				case C('+'):
+				case C('-'):
+				case C('*'):
+				case C('/'):
+				case C('%'):
+				case C('~'):
+				case C('^'):
+				case C('&'):
+				case C('|'):
+				case C('<'):
+				case C('>'):
+				case C('!'):
 					bPunctuationMark = true;
 					break;
 
