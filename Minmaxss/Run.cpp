@@ -8,7 +8,7 @@ int main()
 {
 	using namespace Minmaxss;
 
-	Scanner_s sScanner{"//+++fdsa+fdsfafa+--***=**="};
+	Scanner_s sScanner{"var a = false;"};
 
 	for (;;)
 	{

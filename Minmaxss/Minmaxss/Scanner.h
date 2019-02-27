@@ -8,13 +8,11 @@
 
 #define _CLASS_MINMAXSS_SCANNER_H
 
-#include <algorithm>
 #include <cctype>
 #include <cstdint>
-#include <functional>
 #include <string>
 #include <string_view>
-#include <tuple>
+#include <unordered_map>
 #include <utility>
 
 namespace Minmaxss
@@ -140,7 +138,7 @@ namespace Minmaxss
 		using StringView = std::basic_string_view<T>;
 
 	private:
-		StringView sString;
+		String sString;
 		std::uint64_t nLine;
 		std::uint64_t nOffset;
 		std::uint64_t nIndex;
@@ -158,6 +156,12 @@ namespace Minmaxss
 		
 	public:
 		Token<T> nextToken();
+
+	private:
+		Token<T> parseNumber();
+		Token<T> parseString();
+		Token<T> parseStringMultiline();
+		Token<T> parseKeyword();
 	};
 
 	using Scanner_s = Scanner<char>;
