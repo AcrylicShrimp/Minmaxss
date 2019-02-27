@@ -124,13 +124,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Minmaxss\Endianess.cpp" />
-    <ClCompile Include="Minmaxss\Instruction.cpp" />
     <ClCompile Include="Run.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Minmaxss\Endianess.h" />
-    <ClInclude Include="Minmaxss\Instruction.h" />
-    <ClInclude Include="Minmaxss\PatternMap.h" />
     <ClInclude Include="Minmaxss\Scanner.h" />
     <ClInclude Include="Scanner.hpp" />
   </ItemGroup>

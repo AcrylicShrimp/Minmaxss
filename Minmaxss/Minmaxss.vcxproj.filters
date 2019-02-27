@@ -7,17 +7,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Run.cpp" />
-    <ClCompile Include="Minmaxss\Instruction.cpp">
-      <Filter>Minmaxss</Filter>
-    </ClCompile>
     <ClCompile Include="Minmaxss\Endianess.cpp">
       <Filter>Minmaxss</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Minmaxss\Instruction.h">
-      <Filter>Minmaxss</Filter>
-    </ClInclude>
     <ClInclude Include="Minmaxss\Endianess.h">
       <Filter>Minmaxss</Filter>
     </ClInclude>
@@ -25,9 +19,6 @@
       <Filter>Minmaxss</Filter>
     </ClInclude>
     <ClInclude Include="Scanner.hpp">
-      <Filter>Minmaxss</Filter>
-    </ClInclude>
-    <ClInclude Include="Minmaxss\PatternMap.h">
       <Filter>Minmaxss</Filter>
     </ClInclude>
   </ItemGroup>
