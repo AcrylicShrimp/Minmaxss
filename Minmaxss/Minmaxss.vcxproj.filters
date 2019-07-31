@@ -18,7 +18,7 @@
     <ClInclude Include="Minmaxss\Scanner.h">
       <Filter>Minmaxss</Filter>
     </ClInclude>
-    <ClInclude Include="Scanner.hpp">
+    <ClInclude Include="Minmaxss\Scanner.hpp">
       <Filter>Minmaxss</Filter>
     </ClInclude>
   </ItemGroup>

@@ -8,7 +8,7 @@ int main()
 {
 	using namespace Minmaxss;
 
-	Scanner<char32_t> sScanner{U"var a = false;\nvar a2 = **lol;"};
+	Scanner<char32_t> sScanner{U"var a = false;\nvar a2 = **lol;\n\n"};
 
 	for (;;)
 	{

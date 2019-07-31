@@ -308,17 +308,82 @@ namespace Minmaxss
 
 	template<class T> Token<T> Scanner<T>::parseNumber()
 	{
-		return Token<T>{TokenType::LiteralBool, this->nLine, this->nOffset, String{}};
+		Token<T> sToken{TokenType::LiteralNumber, this->nLine, this->nOffset, String{}};
+
+		return sToken;
 	}
 
 	template<class T> Token<T> Scanner<T>::parseString()
 	{
-		return Token<T>{TokenType::LiteralString, this->nLine, this->nOffset, String{}};
+		Token<T> sToken{TokenType::LiteralString, this->nLine, this->nOffset, String{}};
+
+		for (; this->nIndex < this->nMaxIndex && this->sString[this->nIndex] != C('\n') && this->sString[this->nIndex] != C('"'); ++this->nIndex)
+			if (this->sString[this->nIndex] == C('\\'))
+			{
+				++this->nIndex;
+
+				if (this->nIndex >= this->nMaxIndex)
+				{
+					sToken.eType = TokenType::Error;
+					sToken.sString.push_back(this->sString[this->nIndex]);
+
+					return sToken;
+				}
+
+				T tChar;
+
+				switch (this->sString[this->nIndex])
+				{
+				case C('0'):
+					tChar = '\0';
+					break;
+
+				case C('a'):
+					tChar = '\a';
+					break;
+
+				case C('b'):
+					tChar = '\b';
+					break;
+
+				case C('f'):
+					tChar = '\f';
+					break;
+
+				case C('n'):
+					tChar = '\n';
+					break;
+
+				case C('r'):
+					tChar = '\r';
+					break;
+
+				case C('t'):
+					tChar = '\t';
+					break;
+
+				case C('v'):
+					tChar = '\v';
+					break;
+
+				default:
+					tChar = this->sString[this->nIndex];
+					break;
+				}
+
+				sToken.sString.push_back(tChar);
+			}
+			else
+				sToken.sString.push_back(this->sString[this->nIndex]);
+
+		return sToken;
 	}
 
 	template<class T> Token<T> Scanner<T>::parseStringMultiline()
 	{
-		return Token<T>{TokenType::LiteralString, this->nLine, this->nOffset, String{}};
+		Token<T> sToken{TokenType::LiteralString, this->nLine, this->nOffset, String{}};
+
+		return sToken;
 	}
 
 	template<class T> Token<T> Scanner<T>::parseKeyword()
@@ -335,7 +400,7 @@ namespace Minmaxss
 
 		Token<T> sToken{TokenType::Identifier, this->nLine, this->nOffset, String{this->sString.cbegin() + this->nIndex, this->sString.cbegin() + this->nIndex + 1}};
 
-		for (++this->nIndex; this->nIndex < this->nMaxIndex; ++this->nOffset, ++this->nIndex)
+		for (++this->nOffset, ++this->nIndex; this->nIndex < this->nMaxIndex; ++this->nOffset, ++this->nIndex)
 		{
 			if (std::isspace(this->sString[this->nIndex]))
 				break;
